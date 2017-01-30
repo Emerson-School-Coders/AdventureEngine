@@ -1,0 +1,36 @@
+{
+    "name": "Cuban Warfare",
+    "main": "main",
+    "paths": {
+        "main": {
+            "text": "You are John F. Kennedy.",
+            "actions": [
+                "crisis"
+            ],
+            "names": [
+                "continue"
+            ]
+        },
+        "crisis": {
+            "text": "Cuba has missiles! What to do?",
+            "image": "        ,--.!,\n__/   -|-\n,d08b.  '|`\n0088MM\n`9MMP'",
+            "actions": [
+                "bad",
+                "good"
+            ],
+            "names": [
+                "launch a nuclear strike",
+                "negotiate a deal"
+            ]
+        },
+        "bad": {
+            "text": "Thermonuclear warfare was initiated. Cold war... gone warm!",
+            "image": "          _ ._  _ , _ ._\n        (_ ' ( `  )_  .__)\n      ( (  (    )   `)  ) _)\n     (__ (_   (_ . _) _) ,__)\n          `~~`\\ ' . /`~~`\n               ;   ;\n               /   \\\n _____________/_ __ \\_____________",
+            "special": "badend"
+        },
+        "good": {
+            "text": "A deal was negotiated, and thermonuclear war was prevented.",
+            "special": "goodend"
+        }
+    }
+}
