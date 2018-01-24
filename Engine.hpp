@@ -12,8 +12,6 @@
 #define ENGINETYPE
 #include <string>
 
-#endif /* Engine_hpp */
-
 extern std::string buttons[4];
 extern std::string enginetype;
 
@@ -23,3 +21,5 @@ extern std::string readFile(std::string file);
 extern bool writeFile(std::string file, std::string text);
 extern int getNumber();
 extern void clearS();
+
+#endif /* Engine_hpp */
