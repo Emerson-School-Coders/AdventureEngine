@@ -11,22 +11,30 @@
 #include <iostream>
 #include <fstream>
 #include <unistd.h>
-#include <termios.h>
 #include <curses.h>
 
 std::string buttons[4] = {"1", "2", "3", "4"};
 std::string enginetype = "nix";
 
+void initScreen() {
+    initscr();
+    //raw();			  // line-buffering off, echo off, etc.
+    nonl();			  // NL conversions off
+    intrflush( stdscr, FALSE );	  // we want ^C, etc...
+    (void) keypad( stdscr, TRUE );  // extended keys ON
+    curs_set( 1 );		  // make sure the cursor is visible
+}
+
 void print(std::string text) {
-    std::cout << text;
-    std::cout.flush();
+    waddstr(stdscr, text.c_str());
+    wrefresh(stdscr);
 }
 
 std::string input(std::string text) {
-    std::string output;
-    std::cout << text;
-    std::cin >> output;
-    return output;
+    char * outstr = (char*)malloc(256);
+    print(text);
+    getstr(outstr);
+    return std::string(outstr);
 }
 
 std::string readFile(std::string file) {
@@ -53,15 +61,40 @@ bool writeFile(std::string file, std::string text) {
     return true;
 }
 
-int getNumber() {
-    char retval = getch();
-    if (retval == '1') return 1;
-    else if (retval == '2') return 2;
-    else if (retval == '3') return 3;
-    else if (retval == '4') return 4;
-    else return getNumber();
+int getNumber(bool anyNum) {
+    int c;
+    if (!anyNum) {
+        while (true) {
+            raw();
+            // wait for the user to press a single key
+            flushinp();
+            c = wgetch( stdscr );
+            noraw();
+            if (c == '1') return 1;
+            else if (c == '2') return 2;
+            else if (c == '3') return 3;
+            else if (c == '4') return 4;
+            else if (c == '8') return 5;
+        }
+    } else {
+        raw();
+        // wait for the user to press a single key
+        flushinp();
+        wgetch( stdscr );
+        noraw();
+        return 0;
+    }
 }
 
 void clearS() {
     clear();
+}
+
+void exitScreen() {
+    print("\n\n\nExiting...");
+    sleep(1);
+    noraw();
+    nl();
+    endwin();
+    system("stty sane");
 }
