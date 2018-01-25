@@ -2,10 +2,10 @@
 A cross-platform engine/interpreter written in C++. Include `Interpreter.hpp` in your main source file, and compile both the interpreter and the engine for the platform you are building for, as well as jsoncpp.
 
 # JSON Format
-* `name (string)`: The name of the adventure
-* `main (string)`: The main path (the path to start on)
-* `paths (object)`: The paths that can be run
-    * `<path name> (object)`
+* `name (string)`\*: The name of the adventure
+* `main (string)`\*: The main path (the path to start on)
+* `paths (object)`\*: The paths that can be run
+    * `<path name> (object)`\*
       * `text (string)`\*: The text to be displayed on screen
       * `image (string)`: An image to be displayed above the text
       * `special (string)`: Can be `goodend` or `badend` for endings, or `anykey` for a "press any key" prompt (first action will be executed)
