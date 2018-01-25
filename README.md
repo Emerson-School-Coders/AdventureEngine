@@ -14,3 +14,4 @@ A cross-platform engine/interpreter written in C++. Include `Interpreter.hpp` in
       * `variables (object)`: Variables to set when running the path
       * `prerequisites (object)`: Variables that must be a value to run the path
       * `failedRequirements (string)`\* (if `prerequisites` is specified): What path to use if the prerequisites fail
+\*required
