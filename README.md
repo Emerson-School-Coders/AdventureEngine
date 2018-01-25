@@ -1,7 +1,18 @@
 # AdventureEngine
-A cross-platform engine/interpreter written in C++. Include `Interpreter.hpp` in your main source file, and compile both the interpreter and the engine for the platform you are building for, as well as jsoncpp.
+A cross-platform JSON game interpreter written in C++.
 
-# JSON Format
+# Current platforms & engine files
+ * 3DS: use `Engine-3DS.cpp`
+ * Mac: use `Engine-nix.cpp`
+ * Linux: use `Engine-nix.cpp`
+ * Windows: use `Engine-Windows.cpp`
+
+If you would like to add another platform, create a pull request adding a new `Engine.cpp` file for the platform.
+
+# How to use
+Include `Interpreter.hpp` in your main source file, and compile `Interpreter.cpp`, `jsoncpp.cpp` (unless you are linking a prebuilt jsoncpp), the `Engine.cpp` file for the platform you are building for (refer to above for files), and your main source file. I have included a sample launcher in this repository to test.
+
+# JSON format
 * `name (string)`\*: The name of the adventure
 * `main (string)`\*: The main path (the path to start on)
 * `paths (object)`\*: The paths that can be run
