@@ -23,7 +23,7 @@ void initScreen() {
 }
 
 void print(std::string text) {
-    if (!init) initScreen();
+    //if (!init) initScreen();
     printf(text.c_str());
 }
 
@@ -48,7 +48,7 @@ std::string readFile(std::string file) {
     if (!buffer) goto return "E-1";
     off_t bytesRead = fread(buffer, 1, size, filep);
     fclose(filep);
-    return std::string(buffer);
+    return std::string(reinterpret_cast<char*>(buffer));
 }
 
 bool writeFile(std::string file, std::string text) {
@@ -59,18 +59,39 @@ bool writeFile(std::string file, std::string text) {
     return true;
 }
 
-int getNumber() {
+int getNumber(bool anyNum) {
+    int retval;
+    if (anyNum) {
+        while (true) {
+            hidScanInput();
+            if (hidKeysDown()) break;
+        }
+        while (true) {
+            hidScanInput();
+            if (!hidKeysDown() && !hidKeysHeld()) return 0;
+        }
+    }
     while (true) {
         hidScanInput();
         u32 kDown = hidKeysDown();
-        if (kDown & KEY_A) return 1;
-        else if (kDown & KEY_B) return 2;
-        else if (kDown & KEY_X) return 3;
-        else if (kDown & KEY_Y) return 4;
-        else if (kDown & KEY_START) return 0;
+        if (kDown & KEY_A) {retval = 1; break;}
+        else if (kDown & KEY_B) {retval = 2; break;}
+        else if (kDown & KEY_X) {retval = 3; break;}
+        else if (kDown & KEY_Y) {retval = 4; break;}
+        else if (kDown & KEY_START) {retval = 0; break;}
+        else if (kDown && anyNum) {retval = 0; break;}
     }
+    while (true) {
+        hidScanInput();
+        if (!hidKeysDown() && !hidKeysHeld()) break;
+    }
+    return retval;
 }
 
 void clearS() {
     consoleClear();
+}
+
+void exitScreen() {
+    gfxExit();
 }
