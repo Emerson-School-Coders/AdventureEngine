@@ -1,0 +1,816 @@
+{
+    "name": "Cuban Warfare",
+    "main": "main",
+    "paths": {
+        "main": {
+            "text": "Welcome to Cuban Warfare, written by Jack Bruienne with the Adventure Engine. To play the game, just press the button below that corresponds with your choice.",
+            "special": "anykey",
+            "actions": [
+                "opening"
+            ]
+        },
+        "opening": {
+            "text": "It is October 14, 1962. You have just recieved photographs from a spy plane over Cuba showing a missile launchpad. There are rumors going around that the Soviets are the ones doing this. Should you jump to conclusions, or discuss plans with the Defense Secretary?",
+            "names": [
+                "jump to conclusions",
+                "discuss plans"
+            ],
+            "actions": [
+                "conclude",
+                "discuss"
+            ]
+        },
+        "conclude": {
+            "text": "You decided that the Soviets are going to Cuba to send nuclear missiles to the US. They will immediately strike once production is finished.",
+            "special": "anykey",
+            "actions": [
+                "prepare"
+            ]
+        },
+        "discuss": {
+            "text": "You met with the Secretary of Defense Robert McNamara, as well as a few other secretaries. These photographs were analyzed during the meeting. Secretary of State Dean Rusk thought about sending missiles there immediately, but this was passed off as being too crazy. The group made the conclusion that the Soviet Union does not want to immediately send missiles, but wait until the right moment to strike.",
+            "special": "anykey",
+            "actions": [
+                "slowprepare"
+            ]
+        },
+        "prepare": {
+            "text": "You ordered that nuclear missiles be prepared to be shot at Cuba. After your orders, you realized that the Soviet Union may not have primary intent to attack the US. You wonder if these missiles should be fired at Cuba anyway. The people are innocent, but attacking would stop the Soviets from even being able to assemble missiles in Cuba.",
+            "names": [
+                "fire nuclear missiles at Cuba",
+                "hold off on the missiles"
+            ],
+            "actions": [
+                "bomb1end",
+                "nofire"
+            ]
+        },
+        "slowprepare": {
+            "text": "You mentally prepared for a Cuban missile strike, but did not order missiles to be prepared. You knew that firing missiles would start a real war.",
+            "special": "anykey",
+            "actions": [
+                "whatdo"
+            ]
+        },
+        "bomb1end": {
+            "text": "You ordered the missiles to be fired at Cuba. Robert McNamara warned you of the consequenses of your actions, but you ignored them. Four missiles were fired at the missile site. Unfortunately, you realized that there were nuclear materials at the site, and the explosion of the missiles ended up wiping out the whole island, as well as the tip of Florida. The Soviet Union retaliated because of the missiles, and the whole world went into thermonuclear warfare.",
+            "image": "          _ ._  _ , _ ._\n        (_ ' ( `  )_  .__)\n      ( (  (    )   `)  ) _)\n     (__ (_   (_ . _) _) ,__)\n          `~~`\\ ' . /`~~`\n               ;   ;\n               /   \\\n _____________/_ __ \\_____________",
+            "special": "badend"
+        },
+        "nofire": {
+            "text": "The orders to fire the missiles were not given because you knew that firing the missiles would start a real war. The Soviets did gather some data about the missiles, though, so there may be some problems in the future.",
+            "variables": {
+                "preppedmiss": "true"
+            },
+            "special": "anykey",
+            "actions": [
+                "whatdo"
+            ]
+        },
+        "whatdo": {
+            "text": "If you aren't going to fire missiles at Cuba, you should do something else. You have multiple things that are possible to do here. What will you do to stop these missiles from being built?",
+            "names": [
+                "not do anything to prevent missiles",
+                "block ships with parts",
+                "ask Russia and Cuba to stop",
+                "send troops to Cuba"
+            ],
+            "actions": [
+                "noaction",
+                "blockade",
+                "askboom",
+                "sendtroops"
+            ]
+        },
+		"noaction": {
+			"text": "Since you did nothing, Cuba finished building missiles and fired them straight at the White House. R.I.P.",
+			"special": "badend"
+		},
+        "ask": {
+            "text": "Russia declines. Cuba declines.",
+            "variables": {
+                "asktimes": "0"
+            },
+            "special": "anykey",
+            "actions": [
+                "whatdo"
+            ]
+        },
+        "ask1": {
+            "text": "Russia declines. Cuba declines.",
+            "variables": {
+                "asktimes": "1"
+            },
+            "prerequisites": {
+                "asktimes": "0"
+            },
+            "failedRequirements": "ask",
+            "special": "anykey",
+            "actions": [
+                "whatdo"
+            ]
+        },
+        "ask2": {
+            "text": "Russia declines. Cuba declines.",
+            "variables": {
+                "asktimes": "2"
+            },
+            "prerequisites": {
+                "asktimes": "1"
+            },
+            "failedRequirements": "ask1",
+            "special": "anykey",
+            "actions": [
+                "whatdo"
+            ]
+        },
+        "ask3": {
+            "text": "Russia declines. Cuba declines.",
+            "variables": {
+                "asktimes": "3"
+            },
+            "prerequisites": {
+                "asktimes": "2"
+            },
+            "failedRequirements": "ask2",
+            "special": "anykey",
+            "actions": [
+                "whatdo"
+            ]
+        },
+        "ask4": {
+            "text": "Russia declines. Cuba declines.",
+            "variables": {
+                "asktimes": "4"
+            },
+            "prerequisites": {
+                "asktimes": "3"
+            },
+            "failedRequirements": "ask3",
+            "special": "anykey",
+            "actions": [
+                "whatdo"
+            ]
+        },
+		"askboom": {
+            "text": "While you were working away trying to persuade the Soviets from sending missiles into the US, they secretly launched the missile that was built in Cuba, and half of the country was wiped out because of your stubbornness.",
+            "prerequisites": {
+                "asktimes": "4"
+            },
+            "failedRequirements": "ask4",
+            "special": "badend"
+        },
+		"sendtroops": {
+			"text": "You ordered troops to be sent to Cuba. Unfortunately, Cuba had already prepared for the possibility of an attack, so the mission ended up failing.",
+			"prerequisites": {
+				"preppedmiss": "true"
+			},
+			"failedRequirements": "sendtroopsgood",
+			"variables": {
+				"senttroops": "true",
+				"troopresult": "fail"
+			},
+			"special": "anykey",
+			"actions": [
+				"whatdo2"
+			]
+		},
+		"sendtroopsgood": {
+			"text": "You ordered troops to be sent to Cuba. Fortunately, Cuba was caught off guard and you were able to succeed at setting Cuba back by a bit, but reinforcements from Russia came quickly. Even though the mission succeeded, this is not a permanent solution, so you need to think of something else.",
+			"variables": {
+				"senttroops": "true",
+				"troopresult": "success"
+			},
+			"special": "anykey",
+			"actions": [
+				"whatdo2"
+			]
+		},
+		"whatdo2": {
+            "text": "If you aren't going to fire missiles at Cuba, you should do something else. You have multiple things that are possible to do here. What will you do to stop these missiles from being built?",
+            "names": [
+                "not do anything to prevent missiles",
+                "block ships with parts",
+                "ask Russia and Cuba to stop"
+            ],
+            "actions": [
+                "noaction",
+                "blockade",
+                "askboom2"
+            ]
+        },
+		"ask02": {
+            "text": "Russia declines. Cuba declines.",
+            "variables": {
+                "asktimes": "0"
+            },
+            "special": "anykey",
+            "actions": [
+                "whatdo2"
+            ]
+        },
+        "ask12": {
+            "text": "Russia declines. Cuba declines.",
+            "variables": {
+                "asktimes": "1"
+            },
+            "prerequisites": {
+                "asktimes": "0"
+            },
+            "failedRequirements": "ask02",
+            "special": "anykey",
+            "actions": [
+                "whatdo2"
+            ]
+        },
+        "ask22": {
+            "text": "Russia declines. Cuba declines.",
+            "variables": {
+                "asktimes": "2"
+            },
+            "prerequisites": {
+                "asktimes": "1"
+            },
+            "failedRequirements": "ask12",
+            "special": "anykey",
+            "actions": [
+                "whatdo2"
+            ]
+        },
+        "ask32": {
+            "text": "Russia declines. Cuba declines.",
+            "variables": {
+                "asktimes": "3"
+            },
+            "prerequisites": {
+                "asktimes": "2"
+            },
+            "failedRequirements": "ask22",
+            "special": "anykey",
+            "actions": [
+                "whatdo2"
+            ]
+        },
+        "ask42": {
+            "text": "Russia declines. Cuba declines.",
+            "variables": {
+                "asktimes": "4"
+            },
+            "prerequisites": {
+                "asktimes": "3"
+            },
+            "failedRequirements": "ask32",
+            "special": "anykey",
+            "actions": [
+                "whatdo2"
+            ]
+        },
+		"askboom2": {
+            "text": "While you were working away trying to persuade the Soviets from sending missiles into the US, they secretly launched the missile that was built in Cuba, and half of the country was wiped out because of your stubbornness.",
+            "prerequisites": {
+                "asktimes": "4"
+            },
+            "failedRequirements": "ask42",
+            "special": "badend"
+        },
+		"blockade": {
+			"text": "You ordered that Cuba be blockaded, or as you put it, 'quarantined'. This would mean that any ships going to Cuba had to be checked for weapons. If any were found, the ship would have to return. Any refusal would mean the ship being shot down. The Navy reported that the ships would arrive in four days. So you wait...",
+			"special": "anykey",
+			"actions": [
+				"quarantine"
+			]
+		},
+		"quarantine": {
+			"text": "It is October 22. You go on national television to address the public about this issue. You went live at 7:00 pm on all major television networks to talk about this Crisis.",
+			"names": [
+				"view the speech",
+				"continue"
+			],
+			"actions": [
+				"speech1",
+				"nospeech"
+			]
+		},
+		"speech1": {
+			"text": "Good evening, my fellow citizens:\nThis Government, as promised, has maintained the closest surveillance of the Soviet military buildup on the island of Cuba. Within the past week, unmistakable evidence has established the fact that a series of offensive missile sites is now in preparation on that imprisoned island. The purpose of these bases can be none other than to provide a nuclear strike capability against the Western Hemisphere.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech2",
+				"nospeech"
+			]
+		},
+		"speech2": {
+			"text": "Upon receiving the first preliminary hard information of this nature last Tuesday morning at 9 A.M., I directed that our surveillance be stepped up. And having now confirmed and completed our evaluation of the evidence and our decision on a course of action, this Government feels obliged to report this new crisis to you in fullest detail.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech3",
+				"nospeech"
+			]
+		},
+		"speech3": {
+			"text": "The characteristics of these new missile sites indicate two distinct types of installations. Several of them include medium range ballistic missiles, capable of carrying a nuclear warhead for a distance of more than 1,000 nautical miles. Each of these missiles, in short, is capable of striking Washington, D. C., the Panama Canal, Cape Canaveral, Mexico City, or any other city in the southeastern part of the United States, in Central America, or in the Caribbean area.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech4",
+				"nospeech"
+			]
+		},
+		"speech4": {
+			"text": "Additional sites not yet completed appear to be designed for intermediate range ballistic missiles -- capable of traveling more than twice as far -- and thus capable of  striking most of the major cities in the Western Hemisphere, ranging as far north as Hudson Bay, Canada, and as far south as Lima, Peru. In addition, jet bombers, capable of carrying nuclear weapons, are now being uncrated and assembled in Cuba, while the necessary air bases are being prepared.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech5",
+				"nospeech"
+			]
+		},
+		"speech5": {
+			"text": "This urgent transformation of Cuba into an important strategic base -- by the presence of these large, long-range, and clearly offensive weapons of sudden mass destruction -- constitutes an explicit threat to the peace and security of all the Americas, in flagrant and deliberate defiance of the Rio Pact of 1947, the traditions of this nation and hemisphere, the joint resolution of the 87th Congress, the Charter of the United Nations, and my own public warnings to the Soviets on September 4 and 13. This action also contradicts the repeated assurances of Soviet spokesmen, both publicly and privately delivered, that the arms buildup in Cuba would retain its original defensive character, and that the Soviet Union had no need or desire to station strategic missiles. on the territory of any other nation.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech6",
+				"nospeech"
+			]
+		},
+		"speech6": {
+			"text": "The size of this undertaking makes clear that it has been planned for some months. Yet, only last month, after I had made clear the distinction between any introduction of ground-to-ground missiles and the existence of defensive antiaircraft missiles, the Soviet Government publicly stated on September 11 that, and I quote, 'the armaments and military equipment sent to Cuba are designed exclusively for defensive purposes,' that there is, and I quote the Soviet Government, 'there is no need for the Soviet Government to shift its weapons for a retaliatory blow to any other country, for instance Cuba,' and that, and I quote their government, 'the Soviet Union has so powerful rockets to carry these nuclear warheads that there is no need to search for sites for them beyond the boundaries of the Soviet Union.'\nThat statement was false.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech7",
+				"nospeech"
+			]
+		},
+		"speech7": {
+			"text": "Only last Thursday, as evidence of this rapid offensive buildup was already in my hand, Soviet Foreign Minister Gromyko told me in my office that he was instructed to make it clear once again, as he said his government had already done, that Soviet assistance to Cuba, and I quote, 'pursued solely the purpose of contributing to the defense capabilities of Cuba,' that, and I quote him, 'training by Soviet specialists of Cuban nationals in handling defensive armaments was by no means offensive, and if it were otherwise,' Mr. Gromyko went on, 'the Soviet Government would never become involved in rendering such assistance.'\nThat statement also was false.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech8",
+				"nospeech"
+			]
+		},
+		"speech8": {
+			"text": "Neither the United States of America nor the world community of nations can tolerate deliberate deception and offensive threats on the part of any nation, large or small. We no longer live in a world where only the actual firing of weapons represents a sufficient challenge to a nation's security to constitute maximum peril. Nuclear weapons are so destructive and ballistic missiles are so swift, that any substantially increased possibility of their use or any sudden change in their deployment may well be regarded as a definite threat to peace.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech9",
+				"nospeech"
+			]
+		},
+		"speech9": {
+			"text": "For many years, both the Soviet Union and the United States, recognizing this fact, have deployed strategic nuclear weapons with great care, never upsetting the precarious status quo which insured that these weapons would not be used in the absence of some vital challenge. Our own strategic missiles have never been transferred to the territory of any other nation under a cloak of secrecy and deception; and our history -- unlike that of the Soviets since the end of World War II -- demonstrates that we have no desire to dominate or conquer any other nation or impose our system upon its people. Nevertheless, American citizens have become adjusted to living daily on the bull's-eye of Soviet missiles located inside the U.S.S.R. or in submarines.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech10",
+				"nospeech"
+			]
+		},
+		"speech10": {
+			"text": "In that sense, missiles in Cuba add to an already clear and present danger -- although it should be noted the nations of Latin America have never previously been subjected to a potential nuclear threat. But this secret, swift, extraordinary buildup of Communist missiles -- in an area well known to have a special and historical relationship to the United States and the nations of the Western Hemisphere, in violation of Soviet assurances, and in defiance of American and hemispheric policy -- this sudden, clandestine decision to station strategic weapons for the first time outside of Soviet soil -- is a deliberately provocative and unjustified change in the status quo which cannot be accepted by this country, if our courage and our commitments are ever to be trusted again by either friend or foe.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech11",
+				"nospeech"
+			]
+		},
+		"speech11": {
+			"text": "The 1930's taught us a clear lesson: aggressive conduct, if allowed to go unchecked and unchallenged, ultimately leads to war. This nation is opposed to war. We are also true to our word. Our unswerving objective, therefore, must be to prevent the use of these missiles against this or any other country, and to secure their withdrawal or elimination from the Western Hemisphere.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech12",
+				"nospeech"
+			]
+		},
+		"speech12": {
+			"text": "Our policy has been one of patience and restraint, as befits a peaceful and powerful nation which leads a worldwide alliance. We have been determined not to be diverted from our central concerns by mere irritants and fanatics. But now further action is required, and it is under way; and these actions may only be the beginning. We will not prematurely or unnecessarily risk the costs of worldwide nuclear war in which even the fruits of victory would be ashes in our mouth; but neither will we shrink from that risk at any time it must be faced.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech13",
+				"nospeech"
+			]
+		},
+		"speech13": {
+			"text": "Acting, therefore, in the defense of our own security and of the entire Western Hemisphere, and under the authority entrusted to me by the Constitution as endorsed by the Resolution of the Congress, I have directed that the following initial steps be taken immediately:",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech14",
+				"nospeech"
+			]
+		},
+		"speech14": {
+			"text": "First: To halt this offensive buildup a strict quarantine on all offensive military equipment under shipment to Cuba is being initiated. All ships of any kind bound for Cuba from whatever nation or port will, if found to contain cargoes of offensive weapons, be turned back. This quarantine will be extended, if needed, to other types of cargo and carriers. We are not at this time, however, denying the necessities of life as the Soviets attempted to do in their Berlin blockade of 1948.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech15",
+				"nospeech"
+			]
+		},
+		"speech15": {
+			"text": "Second: I have directed the continued and increased close surveillance of Cuba and its military buildup. The foreign ministers of the OAS [Organization of American States], in their communique' of October 6, rejected secrecy on such matters in this hemisphere. Should these offensive military preparations continue, thus increasing the threat to the hemisphere, further action will be justified. I have directed the Armed Forces to prepare for any eventualities; and I trust that in the interest of both the Cuban people and the Soviet technicians at the sites, the hazards to all concerned of continuing this threat will be recognized.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech16",
+				"nospeech"
+			]
+		},
+		"speech16": {
+			"text": "Third: It shall be the policy of this nation to regard any nuclear missile launched from Cuba against any nation in the Western Hemisphere as an attack by the Soviet Union on the United States, requiring a full retaliatory response upon the Soviet Union.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech17",
+				"nospeech"
+			]
+		},
+		"speech17": {
+			"text": "Fourth: As a necessary military precaution, I have reinforced our base at Guantanamo, evacuated today the dependents of our personnel there, and ordered additional military units to be on a standby alert basis.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech18",
+				"nospeech"
+			]
+		},
+		"speech18": {
+			"text": "Fifth: We are calling tonight for an immediate meeting of the Organ[ization] of Consultation under the Organization of American States, to consider this threat to hemispheric security and to invoke articles 6 and 8 of the Rio Treaty in support of all necessary action. The United Nations Charter allows for regional security arrangements, and the nations of this hemisphere decided long ago against the military presence of outside powers. Our other allies around the world have also been alerted.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech19",
+				"nospeech"
+			]
+		},
+		"speech19": {
+			"text": "Sixth: Under the Charter of the United Nations, we are asking tonight that an emergency meeting of the Security Council be convoked without delay to take action against this latest Soviet threat to world peace. Our resolution will call for the prompt dismantling and withdrawal of all offensive weapons in Cuba, under the supervision of U.N. observers, before the quarantine can be lifted.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech20",
+				"nospeech"
+			]
+		},
+		"speech20": {
+			"text": "Seventh and finally: I call upon Chairman Khrushchev to halt and eliminate this clandestine, reckless, and provocative threat to world peace and to stable relations between our two nations. I call upon him further to abandon this course of world domination, and to join in an historic effort to end the perilous arms race and to transform the history of man. He has an opportunity now to move the world back from the abyss of destruction by returning to his government's own words that it had no need to station missiles outside its own territory, and withdrawing these weapons from Cuba by refraining from any action which will widen or deepen the present crisis, and then by participating in a search for peaceful and permanent solutions.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech21",
+				"nospeech"
+			]
+		},
+		"speech21": {
+			"text": "This nation is prepared to present its case against the Soviet threat to peace, and our own proposals for a peaceful world, at any time and in any forum -- in the OAS, in the United Nations, or in any other meeting that could be useful -- without limiting our freedom of action. We have in the past made strenuous efforts to limit the spread of nuclear weapons. We have proposed the elimination of all arms and military bases in a fair and effective disarmament treaty. We are prepared to discuss new proposals for the removal of tensions on both sides, including the possibilities of a genuinely independent Cuba, free to determine its own destiny. We have no wish to war with the Soviet Union -- for we are a peaceful people who desire to live in peace with all other peoples.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech22",
+				"nospeech"
+			]
+		},
+		"speech22": {
+			"text": "But it is difficult to settle or even discuss these problems in an atmosphere of intimidation. That is why this latest Soviet threat -- or any other threat which is made either independently or in response to our actions this week-- must and will be met with determination. Any hostile move anywhere in the world against the safety and freedom of peoples to whom we are committed, including in particular the brave people of West Berlin, will be met by whatever action is needed.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech23",
+				"nospeech"
+			]
+		},
+		"speech23": {
+			"text": "Finally, I want to say a few words to the captive people of Cuba, to whom this speech is being directly carried by special radio facilities. I speak to you as a friend, as one who knows of your deep attachment to your fatherland, as one who shares your aspirations for liberty and justice for all. And I have watched and the American people have watched with deep sorrow how your nationalist revolution was betrayed -- and how your fatherland fell under foreign domination. Now your leaders are no longer Cuban leaders inspired by Cuban ideals. They are puppets and agents of an international conspiracy which has turned Cuba against your friends and neighbors in the Americas, and turned it into the first Latin American country to become a target for nuclear war -- the first Latin American country to have these weapons on its soil.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech24",
+				"nospeech"
+			]
+		},
+		"speech24": {
+			"text": "These new weapons are not in your interest. They contribute nothing to your peace and well-being. They can only undermine it. But this country has no wish to cause you to suffer or to impose any system upon you. We know that your lives and land are being used as pawns by those who deny your freedom. Many times in the past, the Cuban people have risen to throw out tyrants who destroyed their liberty. And I have no doubt that most Cubans today look forward to the time when they will be truly free -- free from foreign domination, free to choose their own leaders, free to select their own system, free to own their own land, free to speak and write and worship without fear or degradation. And then shall Cuba be welcomed back to the society of free nations and to the associations of this hemisphere.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech25",
+				"nospeech"
+			]
+		},
+		"speech25": {
+			"text": "My fellow citizens, let no one doubt that this is a difficult and dangerous effort on which we have set out. No one can foresee precisely what course it will take or what costs or casualties will be incurred. Many months of sacrifice and self-discipline lie ahead -- months in which both our patience and our will will be tested, months in which many threats and denunciations will keep us aware of our dangers. But the greatest danger of all would be to do nothing.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech26",
+				"nospeech"
+			]
+		},
+		"speech26": {
+			"text": "The path we have chosen for the present is full of hazards, as all paths are; but it is the one most consistent with our character and courage as a nation and our commitments around the world. The cost of freedom is always high, but Americans have always paid it. And one path we shall never choose, and that is the path of surrender or submission.",
+			"names": [
+				"continue reading",
+				"exit"
+			],
+			"actions": [
+				"speech27",
+				"nospeech"
+			]
+		},
+		"speech27": {
+			"text": "Our goal is not the victory of might, but the vindication of right; not peace at the expense of freedom, but both peace and freedom, here in this hemisphere, and, we hope, around the world. God willing, that goal will be achieved.\nThank you and good night.\n\nFrom http://www.americanrhetoric.com/speeches/jfkcubanmissilecrisis.html. Thank you for reading... ;)",
+			"special": "anykey",
+			"actions": [
+				"nospeech"
+			],
+			"variables": {
+				"readspeech": "true"
+			}
+		},
+		"nospeech": {
+			"text": "The blockade was on. Ships were being checked for weapons. But, this blockade could not go on forever. There had to be an end. You set up a meeting with Nikita Khruschev to discuss ending it.",
+			"special": "anykey",
+			"actions": [
+				"Gmeeting"
+			]
+		},
+		"Gmeeting": {
+			"text": "You discussed the blockade with Khruschev. Since God Mode is on, he agrees with everything you say. He will remove weapons from Cuba as soon as the blockade starts. Can you trust him?",
+			"prerequisites": {
+				"readspeech": "true"
+			},
+			"failedRequirements": "bmeeting",
+			"names": [
+				"say yes",
+				"say no"
+			],
+			"actions": [
+				"falsetrust",
+				"notrust"
+			]
+		},
+		"bmeeting": {
+			"text": "You discussed the blockade with Khruschev. Since you had tried to attack Cuba twice, he would not trust you fully. He would only remove the missiles if you removed your weapons from Italy and Turkey.",
+			"prerequisites": {
+				"senttroops": "true",
+				"troopresult": "fail"
+			},
+			"failedRequirements": "meeting",
+			"special": "anykey",
+			"actions": [
+				"rm-af"
+			]
+		},
+		"meeting": {
+			"text": "You discussed the blockade with Khruschev. There are two options to do: you could try to force him to stop the weapons or you will attack, or you can negotiate a deal where the US removes one thing so the Soviets remove the weapons.",
+			"names": [
+				"force removal of the weapons",
+				"negotiate a deal"
+			],
+			"actions": [
+				"rm-rf",
+				"negotiate-rm"
+			]
+		},
+		"trust": {
+			"text": "You trusted Khruschev, and you removed the quarantine from Cuba. Because you never attacked, he decided to remove the missiles from Cuba.",
+			"special": "goodend"
+		},
+		"falsetrust": {
+			"text": "You trusted Khruschev, and you removed the quarantine from Cuba. But since you had attacked Cuba, he did not pull out, but rushed to complete the missiles. He then bombed the US, targeting Washington, DC, where you had specifically stated in your address.",
+			"prerequisites": {
+				"senttroops": "true"
+			},
+			"failedRequirements": "trust",
+			"special": "badend"
+		},
+		"falsenotrust": {
+			"text": "How dare you not trust Khruschev! He was just trying to be nice! You have been stripped of your God Mode status and impeached under espionage.",
+			"special": "badend"
+		},
+		"notrust": {
+			"text": "It was a good thing you didn't trust him. He then tried to push through the quarantine, which did not work. You then set up another meeting.",
+			"special": "anykey",
+			"actions": [
+				"meeting"
+			],
+			"prerequisites": {
+				"senttroops": "true"
+			},
+			"failedRequirements": "falsenotrust"
+		},
+		"rm-af": {
+			"text": "You ordered the missiles in Italy and Turkey to be removed. Once they were removed, Khruschev removed the missiles. You then ended the blockade. Even though things would still be tense, the Cuban Missile Crisis was over, and that's all this game cares about (even though WWIII will start because of this decision).",
+			"special": "goodend"
+		},
+		"rm-rf": {
+			"text": "Unfortunately, Russia is not that easy to stop. Khruschev declines, but you can still force it on him. Should you attack?",
+			"names": [
+				"force an attack",
+				"allow negotiation"
+			],
+			"actions": [
+				"rm-rf/",
+				"negotiate-rm"
+			]
+		},
+		"rm-rf/": {
+			"text": "Khruschev still declines. You storm off, swearing that you will destroy the Soviet Union. But Khruschev was quicker, and he sent off ICBMs to the US. The whole White House was destroyed by it.",
+			"special": "badend"
+		},
+		"negotiate-rm": {
+			"text": "You tell Khruschev that you will talk to your advisers about this issue. He agrees, and the meeting is dismissed.",
+			"special": "anykey",
+			"actions": [
+				"negotiablemessage"
+			]
+		},
+		"negotiablemessage": {
+			"text": "A few days later, Khruschev sends a letter to you saying he will remove the missiles if you do not send any troops to Cuba. The next day, he announces on the radio  that he will withdraw if the Jupiter missiles placed in Italy and Turkey are also withdrawn. Your brother Robert F. Kennedy suggests ignoring the second message and only responding to the first. Which will you respond to?",
+			"names": [
+				"not respond",
+				"respond to the 1st message",
+				"respond to the 2nd message"
+			],
+			"actions": [
+				"noresponse_l",
+				"respond1st",
+				"respond2nd"
+			]
+		},
+        "noresponse_l": {
+            "text": "Khruschev gets angry that you have not done anything. He sends a third message saying that if you do not respond to his second message within three days, he would shoot down the ships around Cuba. Will you respond this time?",
+            "names": [
+                "not respond again",
+                "respond to the 1st message",
+                "respond to the 2nd message",
+                "respond to the 3rd message"
+            ],
+            "actions": [
+                "Gnoresponse_war",
+                "respond1st",
+                "respond2nd",
+                "respond2nd"
+            ]
+        },
+        "noresponse_war": {
+            "text": "Khruschev sticks to his word and attacks the US ships because of some 'missed' letters, causing hundreds of deaths. You really shouldn't have done that, John.",
+            "special": "badend"
+        },
+        "Gnoresponse_war": {
+            "text": "Because you are in God Mode, Khruschev did not stick to his word and let you by because you 'probably missed them'. He eventually let you drop the quarantine, and he stopped sending missiles.",
+            "special": "goodend",
+            "prerequisites": {
+                "readspeech": "true"
+            },
+            "failedRequirements": "noresponse_war"
+        },
+        "respond1st": {
+            "text": "You responded to Khruschev's first letter, saying that you will back down the quarantine. He thinks you did not get the first letter. But he still wants to arrange some sort of deal from you. Should you?",
+            "names": [
+                "refuse a deal, and ask for the deal promised in the letter",
+                "allow secret negotiation"
+            ],
+            "actions": [
+                "promised",
+                "secretnegs"
+            ]
+        },
+        "respond2nd": {
+            "text": "You responded to Khruschev's second letter, saying that you will remove the weapons from Italy and Turkey. He is fine with that, and you quickly order the weapons to be removed.",
+            "special": "anykey",
+            "actions": [
+                "removeitb"
+            ]
+        },
+        "removeitb": {
+            "text": "Unfortunately, he did not fully trust you. After all the weapons were removed, he immediately sent some ICBMs at major US ICBM launch sites. Because both you and Khruschev had removed your defenses, there was no way to attack back at the Soviets. Thousands of lives were lost from this attack.",
+            "special": "badend",
+            "prerequisites": {
+                "senttroops": "true",
+                "troopresult": "fail"
+            },
+            "failedRequirements": "rm-af"
+        },
+        "promised": {
+            "text": "You told Khruschev that you would only accept the offer that was made in the letter. But he would only allow half of the missiles to be removed, and no less. Will you accept this new offer?",
+            "names": [
+                "accept the new offer",
+                "decline the new offer"
+            ],
+            "actions": [
+                "yesnew",
+                "nonew"
+            ]
+        },
+        "promisedb": {
+            "text": "You tols Khruschev that you would only accept the offer that was made in the letter. But he would not move from his position. Will you still remove your weapons?",
+            "names": [
+                "remove your weapons",
+                "keep them there"
+            ],
+            "actions": [
+                "removeitb",
+                "nonew"
+            ]
+        },
+        "yesnew": {
+            "text": "You accepted this new offer, and you ordered half of the missiles to be removed from Italy and Turkey. You then stopped the quarantine. You then go on in a slightly less safe world, where you are slightly less protected from the slightly stronger Soviets.",
+            "special": "goodend"
+        },
+        "nonew": {
+            "text": "You and Khruschev are at a stalemate. Neither of you will back down from your offers. There is nothing to do. Just stop being so stubborn!",
+            "special": "badend"
+        },
+        "secretnegs": {
+            "text": "You announce to the public that the quarantine will be called off. But in secret, you go back and talk with Khruschev about options for backing down.",
+            "names": [
+                "remove all weapons from Italy and Turkey",
+                "remove half of the weapons from Italy and Turkey",
+                "give Russia extra weapons"
+            ],
+            "actions": [
+                "rm-af2",
+                "yesnew",
+                "givehelpb"
+            ]
+        },
+        "rm-af2": {
+            "text": "You ordered the missiles in Italy and Turkey to be removed later in November. Once they were removed, Khruschev removed the missiles. You then ended the blockade. Even though things will still be tense (and the Cold War will continue), the Cuban Missile Crisis is over.\nThank you for playing CubanWarfare. This is the conclusion that actually happened in the Cuban Missile Crisis in 1962. You have made most (if not all) of the choices JFK made. Congratulations.",
+            "special": "goodend"
+        },
+        "givehelp": {
+            "text": "You agreed to give Russia 4 ICBMs, 8 MRBMs, and 21 short-range missiles in secret in mid-November. You then ended the blockade, and all was well, even though you just made your enemy stronger.",
+            "special": "goodend"
+        },
+        "givehelpb": {
+            "text": "You agreed to give Russia 4 ICBMs, 8 MRBMs, and 21 short-range missiles in secret in mid-November. You then ended the blockade. But Russia then turned on you, and the US was decimated by 4 ICBMs, 8 MRBMs, and 21 short-range missiles; all of them being your own.",
+            "special": "badend",
+            "prerequisites": {
+                "senttroops": "true",
+                "troopresult": "fail"
+            },
+            "failedRequirements": "givehelp"
+        }
+    }
+}
