@@ -9,7 +9,7 @@
 #ifndef Engine_hpp
 #define Engine_hpp
 
-#define ENGINETYPE
+//#define ENGINETYPE
 #include <string>
 
 extern std::string buttons[4];
@@ -19,7 +19,9 @@ extern void print(std::string text);
 extern std::string input(std::string text = "> ");
 extern std::string readFile(std::string file);
 extern bool writeFile(std::string file, std::string text);
-extern int getNumber();
+extern int getNumber(bool anyNum = false);
 extern void clearS();
+extern void initScreen();
+extern void exitScreen();
 
 #endif /* Engine_hpp */
