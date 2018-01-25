@@ -8,16 +8,21 @@
 
 #ifndef Interpreter_hpp
 #define Interpreter_hpp
+#ifndef Engine_hpp
 #include "Engine.hpp"
-#include <json/json.h>
+#endif
+#include "json/json.h"
+#include <map>
+
 class AdventureFile {
     Json::Reader reader;
     Json::Value root;
+    std::map<std::string, std::string> variables;
 public:
     bool open(std::string file);
     std::string getFirstId();
     std::string getName();
-    bool doPath(std::string id);
+    std::string doPath(std::string id);
 };
 
 #endif /* Interpreter_hpp */
