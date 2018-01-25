@@ -1,136 +1,99 @@
-//
-//  Adventure Main
-//  CubanWarfare
-//
-//  Created by Homework User on 1/26/17.
-//  Copyright © 2017 JackMacWindows. All rights reserved.
-//
-
-#include "Interpreter.hpp"
-#include <vector>
-#include <tuple>
-#ifdef _WIN32
-#include <Windows.h>
-#endif
-#ifdef __ARM_ARCH_6__ //3ds doesn't have a macro defined, if compiled on armv6 add a <3ds.h> file that is empty
-#include <3ds.h>
-#endif
-#ifdef __APPLE__
+#include <iostream>
 #include <dirent.h>
-#endif
+#include "Interpreter.hpp"
+/* uncomment if using 3DS
+#define __3DS__
+#include <3ds/applets/swkbd.h>
+//*/
 
-AdventureFile warfare;
-std::vector<std::string> files;
+AdventureFile adv;
 
 int main(int argc, const char * argv[]) {
-    print("Adventure Launcher\nLoading list...\n");
-    std::string pathPrefix;
-#ifdef __APPLE__
-    DIR *dpdf;
-    struct dirent *epdf;
-    dpdf = opendir(std::string(std::string(argv[0]).substr(0, std::string(argv[0]).find_last_of("/")) + "/games").c_str());
-    if (dpdf != NULL) while ((epdf = readdir(dpdf))) files.push_back(std::string(epdf->d_name));
-    else {print("Could not open directory"); return 1;}
-    closedir(dpdf);
-    pathPrefix = std::string(std::string(argv[0]).substr(0, std::string(argv[0]).find_last_of("/")) + "/games").c_str();
-#endif
-#ifdef __unix__
-    DIR *dpdf;
-    struct dirent *epdf;
-    dpdf = opendir(std::string(std::string(argv[0]).substr(0, std::string(argv[0]).find_last_of("/")) + "/games").c_str());
-    if (dpdf != NULL) while ((epdf = readdir(dpdf))) files.push_back(std::string(epdf->d_name));
-    closedir(dpdf);
-    pathPrefix = std::string(std::string(argv[0]).substr(0, std::string(argv[0]).find_last_of("/")) + "/games").c_str();
-#endif
-#ifdef _WIN32
-    WIN32_FIND_DATA FindFileData;
-    HANDLE hFind;
-    hFind = FindFirstFile(".\\games", &FindFileData);
-    if (hFind == INVALID_HANDLE_VALUE) {
-        printf ("FindFirstFile failed (%d)\n", GetLastError());
-        return 1;
+	initScreen();
+	if (argc > 1) {
+		if (!adv.open(std::string(argv[1]))) {
+			print("Error opening file\n");
+			return 1;
+		}
+		std::string pathval = adv.doPath(adv.getFirstId());
+		while (true) {
+			if (pathval == "") {
+				exitScreen();
+				return 0;
+			}
+			pathval = adv.doPath(pathval);
+		}
+		exitScreen();
+		return 0;
+	}
+	std::string inp;
+	#ifndef __3DS__
+	DIR *dir;
+	struct dirent *ent;
+	std::vector<std::string> files;
+	if ((dir = opendir(".")) != NULL) {
+  		/* print all the files and directories within directory */
+  		while ((ent = readdir(dir)) != NULL) {
+    		//printf("%s\n", ent->d_name);
+    		if (std::string(ent->d_name).find(".json") != std::string::npos) files.push_back(std::string(ent->d_name));
+  		}
+  		closedir (dir);
+	} else {
+  		/* could not open directory */
+  		print("Could not open directory\n");
+  		exitScreen();
+  		return 2;
+	}
+	print("Choose an option, or type a path (exit with q):\n");
+	int i = 1;
+	for (std::string f : files) {
+		print(std::to_string(i) + ". " + f + "\n");
+		i++;
+	}
+	inp = input();
+	#endif
+	#ifdef __3DS__
+	print("Type a path:\n");
+	SwkbdState keyboard;
+    char* buf;
+    swkbdInit(&keyboard, SWKBD_TYPE_NORMAL, 2, 32);
+    swkbdSetButton(&keyboard, SWKBD_BUTTON_RIGHT, "Run", true);
+    swkbdSetButton(&keyboard, SWKBD_BUTTON_LEFT, "Cancel", false);
+    if (swkbdInputText(&keyboard, buf, 32) == SWKBD_BUTTON_LEFT) {
+    	exitScreen();
+    	return 3;
     }
-    files[0] = std::string(FindFileData.cFileName);
-    while (GetLastError() != ERROR_NO_MORE_FILES) {
-        FindNextFile(hFind, FindFileData);
-        files.push_back(std::string(FindFileData.cFileName));
-    }
-    FindClose(hFind);
-    pathPrefix = ".\\games";
-#endif
-#ifdef CONSOLE_RED
-    Handle dirHandle;
-    FS_DirectoryEntry entry;
-    
-    //Create an archive object
-    FS_Archive sdmcArchive;
-    
-    //Open the SD card into the archive object
-    FSUSER_OpenArchive( &sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, ""));
-    
-    //Get a directory from the SD card archive ('/' in this case)
-    FSUSER_OpenDirectory(&dirHandle, sdmcArchive, fsMakePath(PATH_ASCII, "/3ds/AdventureLauncher/games"));
-    
-    //Init some vars for storing directory listing data
-    u32 entriesRead;
-    static char name[1024];
-    
-    //Debug to show the function has gone this far
-    for (;;){
-        
-        //Reset entries var
-        entriesRead=0;
-        
-        //Read the next item in the directory
-        FSDIR_Read(dirHandle, &entriesRead, 1, (FS_DirectoryEntry*)&entry);
-        
-        //If there is a next item
-        if (entriesRead) {
-            //also from lpp-3ds, converts a utf-8 to a string
-            utf2ascii(&name[0], entry.name);
-            files.push_back(std::string(name) + "." + std::string(entry.shortExt));
-        } else break;
-    }
-    //Close handles and archives.
-    FSDIR_Close(dirHandle);
-    svcCloseHandle(dirHandle);
-    FSUSER_CloseArchive(&sdmcArchive);
-    pathPrefix = "/3ds/AdventureLauncher/games";
-#endif
-    std::vector<std::pair<std::string, std::string>> names;
-    for (std::string file : files) {
-        if (file.substr(file.find(".")) == ".json") {
-            warfare.open(pathPrefix + file);
-            names.push_back(std::make_pair(warfare.getName(), file));
-        }
-    }
-    clearS();
-    print("Here are your options. Type the number to select it:\n");
-    int i = 1;
-    for (std::tuple<std::string, std::string> name : names) {
-        print(std::to_string(i) + ". " + std::get<0>(name) + "\n");
-        i++;
-    }
-#ifdef CONSOLE_RED
-    print("Press any letter button to open the keyboard.");
-    getNumber();
-#endif
-    std::string choice = input();
-    print(choice);
-    int number;
+    inp = std::string(buf);
+    #endif
+    std::string fpath;
+    #ifndef __3DS__
     try {
-        number = stoi(choice);
-    } catch (const std::invalid_argument& ia) {
-        print("No number in string.\nExiting...\n");
-        goto Exit;
+    	int fnum = std::stoi(inp);
+    	print(std::to_string(fnum));
+    	fpath = files[fnum - 1];
+    } catch (const std::invalid_argument& e) {
+    	#endif
+    	fpath = inp;
+    	#ifndef __3DS__
     }
-    print("Starting " + std::get<0>(names[number-1]) + "...\n\n");
-    warfare.open(std::get<1>(names[number]));
-    warfare.doPath(warfare.getFirstId());
-Exit:
-#ifdef CONSOLE_RED
-    fsExit();
-    gfxExit();
-#endif
-    return 0;
+    #endif
+    if (fpath == "q") {
+    	exitScreen();
+    	return 4;
+    }
+    if (!adv.open(fpath)) {
+		print("Error opening file " + fpath + "\n");
+		exitScreen();
+		return 1;
+	}
+	std::string pathval = adv.doPath(adv.getFirstId());
+	while (true) {
+		if (pathval == "") {
+			exitScreen();
+			return 0;
+		}
+		pathval = adv.doPath(pathval);
+	}
+	exitScreen();
+	return 0;
 }
