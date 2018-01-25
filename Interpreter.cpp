@@ -63,7 +63,7 @@ std::string AdventureFile::doPath(std::string id) {
 		size_t pp = currentString.find(")", fp);
 		if (pp == std::string::npos) break;
 		std::string varName = currentString.substr(fp + 2, pp - fp - 2);
-		currentString.replace(fp, pp, this->variables[varName]);
+		currentString.replace(fp, pp - fp + 1, this->variables[varName]);
 	}
     print(currentString + "\n");
     
