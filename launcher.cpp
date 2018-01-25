@@ -47,7 +47,9 @@ int main(int argc, const char * argv[]) {
 	print("Choose an option, or type a path (exit with q):\n");
 	int i = 1;
 	for (std::string f : files) {
-		print(std::to_string(i) + ". " + f + "\n");
+		AdventureFile name;
+		name.open(f);
+		print(std::to_string(i) + ". " + name.getName() + "\n");
 		i++;
 	}
 	inp = input();
