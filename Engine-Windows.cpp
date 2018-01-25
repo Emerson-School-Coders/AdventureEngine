@@ -15,6 +15,14 @@
 std::string buttons[4] = {"1", "2", "3", "4"};
 std::string enginetype = "win";
 
+void initScreen() {
+    return;
+}
+
+void exitScreen() {
+    return;
+}
+
 void print(std::string text) {
     std::cout << text;
     std::cout.flush();
@@ -64,13 +72,13 @@ char getch() {
     else return 0;
 }
 
-int getNumber() {
+int getNumber(bool anyNum) {
     char retval = getch();
     if (retval == '1') return 1;
     else if (retval == '2') return 2;
     else if (retval == '3') return 3;
     else if (retval == '4') return 4;
-    else return getNumber();
+    else if (anyNum) return 0;
 }
 
 void clearS() {
