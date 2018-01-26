@@ -1,5 +1,5 @@
 # AdventureEngine
-A cross-platform JSON game interpreter written in C++.
+A cross-platform JSON game interpreter written in C++. This project was created as part of a project on the Cuban Missle Crisis. My final game code is included as CubanWarfare.json.
 
 # Current platforms & engine files
  * Windows: use `Engine-Windows.cpp`
