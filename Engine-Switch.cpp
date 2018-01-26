@@ -2,9 +2,10 @@
 //  Adventure Engine for Switch
 //  CubanWarfare
 //
-//  Created by Homework User on 1/28/17.
-//  Copyright © 2017 JackMacWindows. All rights reserved.
+//  Created by Homework User on 1/25/18.
+//  Copyright © 2018 JackMacWindows. All rights reserved.
 //
+//  Make sure to add the json file where needed below.
 
 #define ENGINETYPE 2
 #include "Engine.hpp"
@@ -423,7 +424,16 @@ std::string readFile(std::string file) {
     fclose(filep);
     return std::string(reinterpret_cast<char*>(buffer));*/
     return R"(
-    	//place json file here
+    	{
+		"name": "Not replaced",
+		"main": "main",
+		"paths": {
+			"main": {
+				"text": "Whoever compiled the game forgot to put the actual game code into the program!",
+				"special": "badend"
+			}
+		}
+	}
     )"; //no good fs ((functions)) yet
 }
 
