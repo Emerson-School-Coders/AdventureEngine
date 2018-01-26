@@ -27,3 +27,21 @@ Include `Interpreter.hpp` in your main source file, and compile `Interpreter.cpp
       * `failedRequirements (string)` (required if `prerequisites` is specified): What path to use if the prerequisites fail
 
 \*required
+
+# Adventure API
+ * `Engine.hpp`: cross platform interface
+    * `void print(std::string text)`: Prints the text to screen (without newline)
+    * `std::string input(std::string text = "> ")`: Get text input
+    * `std::string readFile(std::string file)`: Read an entire file
+    * `bool writeFile(std::string file, std::string text)`: Write text to a file
+    * `int getNumber(bool anyNum = false)`: Read a number (1-4 if !anyNum, any number if anyNum)
+    * `void clearS()`: Clear the screen
+    * `void initScreen()`: Initialize the screen (call when program starts)
+    * `void exitScreen()`: End the screen (call when program ends)
+ * `Interpreter.hpp`: Adventure file interpreter
+    * `class AdventureFile`: Adventure file interpreter class
+       * `std::map<std::string, std::string> variables`: Currently set variables
+       * `bool open(std::string file)`: Open a file and interpret it
+       * `std::string getFirstId()`: Get the first path to be run
+       * `std::string getName()`: Get the name of the file
+       * `std::string doPath(std::string id)`: Run a path, returns the id of the next path to be run or `""`
