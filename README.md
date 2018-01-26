@@ -2,10 +2,10 @@
 A cross-platform JSON game interpreter written in C++.
 
 # Current platforms & engine files
- * 3DS: use `Engine-3DS.cpp`
+ * Windows: use `Engine-Windows.cpp`
  * Mac: use `Engine-nix.cpp`
  * Linux: use `Engine-nix.cpp`
- * Windows: use `Engine-Windows.cpp`
+ * 3DS: use `Engine-3DS.cpp`
 
 If you would like to add another platform, create a pull request adding a new `Engine.cpp` file for the platform.
 
