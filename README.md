@@ -6,6 +6,7 @@ A cross-platform JSON game interpreter written in C++.
  * Mac: use `Engine-nix.cpp`
  * Linux: use `Engine-nix.cpp`
  * 3DS: use `Engine-3DS.cpp`
+ * Nintendo Switch: use `Engine-Switch.cpp` and replace the template JSON in the engine with the actual game (is very unstable now due to the nature of Switch homebrew)
 
 If you would like to add another platform, create a pull request adding a new `Engine.cpp` file for the platform.
 
